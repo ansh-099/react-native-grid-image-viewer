@@ -1,0 +1,35 @@
+{
+  "name": "react-native-grid-image-viewer",
+  "version": "1.0.1",
+  "description": "A grid display for multiple images which you can view on clicking in fullscreen mode and swipe through.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansh-099/react-native-grid-image-viewer.git"
+  },
+  "keywords": [
+    "react-native-grid-image-viewer",
+    "react-native-image-layout",
+    "gallery",
+    "react-native",
+    "images",
+    "album",
+    "swiper",
+    "full-screen-images",
+    "ios",
+    "android",
+    "animation",
+    "image-viewer",
+    "grid-view",
+    "grid"
+  ],
+  "author": "Anshul Singh <ansh.099@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ansh-099/react-native-grid-image-viewer/issues"
+  },
+  "homepage": "https://github.com/ansh-099/react-native-grid-image-viewer#readme"
+}
