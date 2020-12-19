@@ -1,6 +1,6 @@
 {
   "name": "gridimageviewer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.4"
+    "react-native": "0.63.4",
+    "react-native-grid-image-viewer": "file:react-native-grid-image-viewer"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     cross: {
         position: 'absolute',
         left: 0,
-        top: 40
+        top: 20
     },
     move_left_view: {
         position: 'absolute',

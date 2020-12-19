@@ -1,7 +1,3 @@
-# react-native-grid-image-viewer
-
-The Package can be found at [react-native-grid-image-viewer](https://www.npmjs.com/package/react-native-grid-image-viewer).
-
 A grid display for multiple images which you can view on clicking in fullscreen mode and swipe through.
 
 * Grid Image Viewer
@@ -16,9 +12,9 @@ A grid display for multiple images which you can view on clicking in fullscreen 
 
 <table>
         <tr>
-<td><img src = "https://user-images.githubusercontent.com/35291991/102540002-7085e680-40d4-11eb-943d-31f7a18a5e3a.PNG" height = "420" width="250"></td>
-<td><img src = "https://user-images.githubusercontent.com/35291991/102540039-7a0f4e80-40d4-11eb-877c-ee725e1e8621.PNG" height = "420" width="250"></td>
-<td><img src = "https://user-images.githubusercontent.com/35291991/102538003-b8efd500-40d1-11eb-8676-ccf115f5561f.gif" height = "420" width="250"></td>
+<td><img src = "https://user-images.githubusercontent.com/35291991/102540002-7085e680-40d4-11eb-943d-31f7a18a5e3a.PNG" height = "420" width="255"></td>
+<td><img src = "https://user-images.githubusercontent.com/35291991/102540039-7a0f4e80-40d4-11eb-877c-ee725e1e8621.PNG" height = "420" width="255"></td>
+<td><img src = "https://user-images.githubusercontent.com/35291991/102538003-b8efd500-40d1-11eb-8676-ccf115f5561f.gif" height = "420" width="255"></td>
        </tr>
 </table>  
 
