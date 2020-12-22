@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, StyleSheet, TouchableHighlight, Button, Dimensions, TouchableOpacity, Modal, TextInput, FlatList, Image, ScrollView, Text } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, StyleSheet, Dimensions, TouchableOpacity, Modal, FlatList, Image, ScrollView } from 'react-native';
 import Cross from './Cross';
 import MoveLeft from './MoveLeft';
 import MoveRight from './MoveRight';
