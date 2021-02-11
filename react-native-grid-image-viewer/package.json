@@ -1,6 +1,6 @@
 {
   "name": "react-native-grid-image-viewer",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A grid display for multiple images which you can view on clicking in fullscreen mode and swipe through.",
   "main": "index.js",
   "scripts": {

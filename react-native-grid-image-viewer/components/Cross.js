@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 
 const Cross = () => {
     return (
-        <View>
+        <View style={styles.background}>
             <View style={styles.left}>
                 <View style={styles.right} />
             </View>
@@ -14,6 +14,12 @@ const Cross = () => {
 
 
 const styles = StyleSheet.create({
+    background:{
+        height:60,
+        width:60,
+        justifyContent:'center',
+        alignItems:'center',
+    },
     left: {
         height: 25,
         width: 3,

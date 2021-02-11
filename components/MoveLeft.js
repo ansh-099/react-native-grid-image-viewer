@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 
 const MoveLeft = () => {
     return (
-        <View>
+        <View style={styles.background}>
             <View style={styles.top} >
             <View style={styles.bottom} />
             </View>
@@ -15,6 +15,13 @@ const MoveLeft = () => {
 
 
 const styles = StyleSheet.create({
+    background:{
+        height: 80,
+        width: 50,
+        alignItems:'center',
+        justifyContent:'center',
+        flexDirection:'row-reverse'
+    },
     top: {
         height: 20,
         width: 3,

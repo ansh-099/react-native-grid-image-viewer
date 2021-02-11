@@ -1,13 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, StyleSheet, Dimensions, TouchableOpacity, Modal, FlatList, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Dimensions, TouchableOpacity, Modal, FlatList, Image, ScrollView, Platform, NativeModules } from 'react-native';
 import Cross from './Cross';
 import MoveLeft from './MoveLeft';
 import MoveRight from './MoveRight';
 
-const GridImageView = ({ data }) => {
+const GridImageView = ({ data, headers = null }) => {
     const [modal, setModal] = useState({ visible: false, data: 0 });
     const ref = useRef();
     var key = 0;
+
+    const { StatusBarManager } = NativeModules;
+    const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
+    const [height, setHeight] = useState(STATUSBAR_HEIGHT);
+
+    useEffect(() => {
+        StatusBarManager.getHeight((statusBarHeight) => {
+            setHeight(statusBarHeight.height);
+          });
+    }, []);
+
+            
 
     const Component = ({ style = { flex: 1 } }) => {
         return (
@@ -16,13 +28,19 @@ const GridImageView = ({ data }) => {
                     data.map((item, key) =>
                     (
                         <View key={key}>
+                            {headers == null || headers == undefined || headers == {} ?
                             <Image style={styles.img_modal} source={{ uri: item.image }} />
+                            : <Image style={styles.img_modal} source={{ uri: item.image,
+                                method: 'POST',
+                                headers
+                             }} />
+                            }
                         </View>
                     ))
                 }
             </ScrollView>
         );
-    }
+    };
 
     return (
         <View style={styles.background}>
@@ -33,14 +51,28 @@ const GridImageView = ({ data }) => {
                 transparent={true}
                 visible={modal.visible}
                 onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
+                    setModal({ visible: false, data: 0 });
                 }}>
 
                 <Component />
 
-                <View style={styles.cross}>
+
+                <View style={styles.move_left_view}>
                     <TouchableOpacity
-                        style={{ paddingLeft: 20, paddingRight: 40, paddingVertical: 30 }}
+                        onPress={() => {
+                            if(modal.data-1 >= 0){
+                                setTimeout(() => {
+                                ref.current.scrollTo({ x: Dimensions.get('window').width * (modal.data - 1), y: 0, animated: false });
+                            }, 1);   
+                                setModal({visible: true, data: modal.data-1});
+                            }
+                        }}>
+                        <MoveLeft />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{...styles.cross, top: height + 5}}>
+                    <TouchableOpacity
                         onPress={() => {
                             setModal({ visible: false, data: 0 });
                         }}>
@@ -48,17 +80,15 @@ const GridImageView = ({ data }) => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.move_left_view}>
-                    <TouchableOpacity
-                        onPress={() => {
-                        }}>
-                        <MoveLeft />
-                    </TouchableOpacity>
-                </View>
-
                 <View style={styles.move_right_view}>
                     <TouchableOpacity
                         onPress={() => {
+                            if(modal.data+1 < data.length){
+                                setTimeout(() => {
+                                ref.current.scrollTo({ x: Dimensions.get('window').width * (modal.data + 1), y: 0, animated: false });
+                            }, 1);   
+                                setModal({visible: true, data: modal.data+1});
+                            }
                         }}>
                         <MoveRight />
                     </TouchableOpacity>
@@ -143,7 +173,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     flatlist: {
-        flex: 1
+        flex: 1 
     },
     unit: {
         flexDirection: 'row'
@@ -164,8 +194,10 @@ const styles = StyleSheet.create({
     },
     cross: {
         position: 'absolute',
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
         left: 0,
-        top: 20
     },
     move_left_view: {
         position: 'absolute',
@@ -174,7 +206,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         top: 0,
         bottom: 0,
-        left: 20
+        left: 10
     },
     move_right_view: {
         position: 'absolute',
@@ -183,7 +215,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         top: 0,
         bottom: 0,
-        right: 20
+        right: 10
     }
 });
 
