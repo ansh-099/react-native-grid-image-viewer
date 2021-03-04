@@ -14,9 +14,12 @@ const GridImageView = ({ data, headers = null }) => {
     const [height, setHeight] = useState(STATUSBAR_HEIGHT);
 
     useEffect(() => {
-        StatusBarManager.getHeight((statusBarHeight) => {
-            setHeight(statusBarHeight.height);
-          });
+        if(Platform.OS === 'ios') {
+            StatusBarManager.getHeight((statusBarHeight) => {
+                setHeight(statusBarHeight.height);
+              });
+        }
+        
     }, []);
 
             
