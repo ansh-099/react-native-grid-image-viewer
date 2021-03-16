@@ -130,10 +130,10 @@ export default App;
 
 | Prop            | Type     | Description                                             |
 | ---------------- | -------- | ------------------------------------------------------- |
-| data    | array  |  List of images to be displayed in the grid should be in the form: [{image: url1}, {image: url2}, ...] |
-| headers    | json  |  Pass headers, for instance to restrict access. Eg. {'Authorization': 'Bearer ' + 'TOKEN'} |
-| renderGridImage    | function(item, defaultStyle) => Node  | Optional. Custom function to render each image in grid view. Default style must be applied on the returned node and the image itself (if different). |
-| renderModalImage    | function(item, defaultStyle) => Node  | Optional. Custom function to render each image in modal view. Default style must be applied on the <Image /> node. |
+| data    | array  | List of images to be displayed in the grid should be in the form: [{image: url1}, {image: url2}, ...] |
+| headers    | json  | (Optional) Pass headers, for instance to restrict access. Eg. {'Authorization': 'Bearer ' + 'TOKEN'} |
+| renderGridImage    | function(item, defaultStyle) => Node  | (Optional) Custom function to render each image in grid view. Default style must be applied on the returned node and the image itself (if different). |
+| renderModalImage    | function(item, defaultStyle) => Node  | (Optional) Custom function to render each image in modal view. Default style must be applied on the <Image /> node. |
 
 ## License
 

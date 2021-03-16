@@ -4,7 +4,7 @@ import Cross from './Cross';
 import MoveLeft from './MoveLeft';
 import MoveRight from './MoveRight';
 
-const GridImageView = ({ data, headers = null }) => {
+const GridImageView = ({ data, headers = null, renderGridImage = null, renderModalImage = null }) => {
     const [modal, setModal] = useState({ visible: false, data: 0 });
     const ref = useRef();
     var key = 0;
@@ -19,7 +19,6 @@ const GridImageView = ({ data, headers = null }) => {
                 setHeight(statusBarHeight.height);
               });
         }
-        
     }, []);
 
             
@@ -31,12 +30,14 @@ const GridImageView = ({ data, headers = null }) => {
                     data.map((item, key) =>
                     (
                         <View key={key}>
-                            {headers == null || headers == undefined || headers == {} ?
-                            <Image style={styles.img_modal} source={{ uri: item.image }} />
-                            : <Image style={styles.img_modal} source={{ uri: item.image,
-                                method: 'POST',
-                                headers
-                             }} />
+                            {renderModalImage !== null
+                                ? renderModalImage(item, styles.img_modal)
+                                : <Image
+                                    style={styles.img_modal} 
+                                    source={{
+                                        uri: item.image,
+                                        ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
+                                    }} />
                             }
                         </View>
                     ))
@@ -121,7 +122,15 @@ const GridImageView = ({ data, headers = null }) => {
                                         }}
                                         style={styles.unit_item}
                                     >
-                                        <Image style={styles.img} source={{ uri: data[index * 3].image }} />
+                                        {renderGridImage !== null
+                                            ? renderGridImage(data[index * 3], styles.img)
+                                            : <Image
+                                                style={styles.img} 
+                                                source={{
+                                                    uri: data[index * 3].image,
+                                                    ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
+                                                }} />
+                                        }
                                     </TouchableOpacity> : null}
                             </View>
                             <View style={styles.unit_item}>
@@ -137,7 +146,15 @@ const GridImageView = ({ data, headers = null }) => {
                                         }}
                                         style={styles.unit_item}
                                     >
-                                        <Image style={styles.img} source={{ uri: data[index * 3 + 1].image }} />
+                                        {renderGridImage !== null
+                                            ? renderGridImage(data[index * 3 + 1], styles.img)
+                                            : <Image
+                                                style={styles.img} 
+                                                source={{
+                                                    uri: data[index * 3 + 1].image,
+                                                    ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
+                                                }} />
+                                        }
                                     </TouchableOpacity> : null}
                             </View>
                             <View style={styles.unit_item}>
@@ -153,7 +170,15 @@ const GridImageView = ({ data, headers = null }) => {
                                         }}
                                         style={styles.unit_item}
                                     >
-                                        <Image style={styles.img} source={{ uri: data[index * 3 + 2].image }} />
+                                        {renderGridImage !== null
+                                            ? renderGridImage(data[index * 3 + 2], styles.img)
+                                            : <Image
+                                                style={styles.img} 
+                                                source={{
+                                                    uri: data[index * 3 + 2].image,
+                                                    ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
+                                                }} />
+                                        }
                                     </TouchableOpacity> : null}
                             </View>
 
