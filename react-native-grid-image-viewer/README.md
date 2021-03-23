@@ -130,6 +130,8 @@ export default App;
 | headers    | json  | (Optional) Pass headers, for instance to restrict access. Eg. {'Authorization': 'Bearer ' + 'TOKEN'} |
 | renderGridImage    | function(item, defaultStyle) => Node  | (Optional) Custom function to render each image in grid view. Default style must be applied on the returned node and the image itself (if different). |
 | renderModalImage    | function(item, defaultStyle) => Node  | (Optional) Custom function to render each image in modal view. Default style must be applied on the <Image /> node. |
+| transparent    | int  | (Optional) Transparency on the background when single image is viewed in full screen mode, Range=[0, 1] |
+
 ## License
 
 This project is licensed under the MIT License - see [LICENSE.md](https://github.com/ansh-099/react-native-grid-image-viewer/blob/master/LICENSE.md) for details

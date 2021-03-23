@@ -4,7 +4,7 @@ import Cross from './Cross';
 import MoveLeft from './MoveLeft';
 import MoveRight from './MoveRight';
 
-const GridImageView = ({ data, headers = null, renderGridImage = null, renderModalImage = null }) => {
+const GridImageView = ({ data, headers = null, renderGridImage = null, renderModalImage = null, transparent = 0.8 }) => {
     const [modal, setModal] = useState({ visible: false, data: 0 });
     const ref = useRef();
     var key = 0;
@@ -31,9 +31,11 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                     (
                         <View key={key}>
                             {renderModalImage !== null
-                                ? renderModalImage(item, styles.img_modal)
+                                ? renderModalImage(item, {...styles.img_modal,
+                                    backgroundColor: `rgba(0, 0, 0, ${transparent})`})
                                 : <Image
-                                    style={styles.img_modal} 
+                                    style={{...styles.img_modal,
+                                        backgroundColor: `rgba(0, 0, 0, ${transparent})`}} 
                                     source={{
                                         uri: item.image,
                                         ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
@@ -217,8 +219,7 @@ const styles = StyleSheet.create({
     img_modal: {
         height: Dimensions.get('window').height,
         width: Dimensions.get('window').width,
-        resizeMode: 'contain',
-        backgroundColor: 'rgba(0, 0, 0, 0.8)'
+        resizeMode: 'contain'
     },
     cross: {
         position: 'absolute',
