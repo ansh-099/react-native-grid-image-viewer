@@ -4,7 +4,7 @@ import Cross from './Cross';
 import MoveLeft from './MoveLeft';
 import MoveRight from './MoveRight';
 
-const GridImageView = ({ data, headers = null, renderGridImage = null, renderModalImage = null, transparent = 0.8 }) => {
+const GridImageView = ({ data, headers = null, renderGridImage = null, renderModalImage = null, transparent = 0.8, uri_string = null }) => {
     const [modal, setModal] = useState({ visible: false, data: 0 });
     const ref = useRef();
     var key = 0;
@@ -37,7 +37,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                     style={{...styles.img_modal,
                                         backgroundColor: `rgba(0, 0, 0, ${transparent})`}} 
                                     source={{
-                                        uri: item.image,
+                                        uri: uri_string !== null ? item[uri_string] : item.image,
                                         ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
                                     }} />
                             }
@@ -129,7 +129,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                             : <Image
                                                 style={styles.img} 
                                                 source={{
-                                                    uri: data[index * 3].image,
+                                                    uri: uri_string !== null ? data[index * 3][uri_string] : data[index * 3].image,
                                                     ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
                                                 }} />
                                         }
@@ -153,7 +153,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                             : <Image
                                                 style={styles.img} 
                                                 source={{
-                                                    uri: data[index * 3 + 1].image,
+                                                    uri: uri_string !== null ? data[index * 3 + 1][uri_string] : data[index * 3 + 1].image,
                                                     ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
                                                 }} />
                                         }
@@ -177,7 +177,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                             : <Image
                                                 style={styles.img} 
                                                 source={{
-                                                    uri: data[index * 3 + 2].image,
+                                                    uri: uri_string !== null ? data[index * 3 + 2][uri_string] : data[index * 3 + 2].image,
                                                     ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
                                                 }} />
                                         }
