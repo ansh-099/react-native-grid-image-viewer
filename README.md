@@ -54,7 +54,7 @@ export default class App extends Component {
       <Text style={styles.headline_text}>Grid View Images</Text>
       <Text style={styles.explore_text}>Click on an image to view in full screen mode</Text>
 
-      <GridImageView data={[{ image: 'url' }, { image: 'url' }, { image: 'url' }, { image: 'url' }]} />
+      <GridImageView data={[ 'url1', 'url2', 'url3', 'url4' ]} />
     </View>
     );
   }
@@ -96,7 +96,7 @@ const App = () => {
       <Text style={styles.headline_text}>Grid View Images</Text>
       <Text style={styles.explore_text}>Click on an image to view in full screen mode</Text>
 
-      <GridImageView data={[{ image: 'url' }, { image: 'url' }, { image: 'url' }, { image: 'url' }]} />
+      <GridImageView data={[ 'url1', 'url2', 'url3', 'url4' ]} />
     </View>
   );
 };
@@ -130,11 +130,13 @@ export default App;
 
 | Prop            | Type     | Description                                             |
 | ---------------- | -------- | ------------------------------------------------------- |
-| data    | array  | List of images to be displayed in the grid should be in the form: [{image: url1}, {image: url2}, ...] |
+| data    | array  | List of images to be displayed in the grid should be in the form of array: [url1, url2, ...] |
 | headers    | json  | (Optional) Pass headers, for instance to restrict access. Eg. {'Authorization': 'Bearer ' + 'TOKEN'} |
 | renderGridImage    | function(item, defaultStyle) => Node  | (Optional) Custom function to render each image in grid view. Default style must be applied on the returned node and the image itself (if different). |
 | renderModalImage    | function(item, defaultStyle) => Node  | (Optional) Custom function to render each image in modal view. Default style must be applied on the <Image /> node. |
 | transparent    | int  | (Optional) Transparency on the background when single image is viewed in full screen mode, Range=[0, 1] |
+| heightOfGridImage    | int  | (Optional) Height of each item in grid image view |
+
 
 ## License
 

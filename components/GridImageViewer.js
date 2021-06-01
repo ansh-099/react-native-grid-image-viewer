@@ -4,7 +4,7 @@ import Cross from './Cross';
 import MoveLeft from './MoveLeft';
 import MoveRight from './MoveRight';
 
-const GridImageView = ({ data, headers = null, renderGridImage = null, renderModalImage = null, transparent = 0.8 }) => {
+const GridImageView = ({ data, headers = null, renderGridImage = null, renderModalImage = null, transparent = 0.8, heightOfGridImage = Dimensions.get('window').height / 5.5 }) => {
     const [modal, setModal] = useState({ visible: false, data: 0 });
     const ref = useRef();
     var key = 0;
@@ -37,7 +37,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                     style={{...styles.img_modal,
                                         backgroundColor: `rgba(0, 0, 0, ${transparent})`}} 
                                     source={{
-                                        uri: item.image,
+                                        uri: item,
                                         ...(headers == null || headers == undefined || headers == {} ? {} : {method: 'POST', headers})
                                     }} />
                             }
@@ -105,13 +105,13 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
             <FlatList
                 contentContainerStyle={{ paddingBottom: 40 }}
                 data={data}
-                renderItem={({ item, index }) => {
+                renderItem={({ index }) => {
                     if (data.length <= index * 3) {
                         return null;
                     }
                     return (
                         <View style={styles.unit}>
-                            <View style={styles.unit_item}>
+                            <View style={[styles.unit_item, {height: heightOfGridImage}]}>
                                 {data.length > index * 3 ?
                                     <TouchableOpacity
                                         onPress={() => {
@@ -122,7 +122,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                             }, 1);
 
                                         }}
-                                        style={styles.unit_item}
+                                        style={[styles.unit_item, {height: heightOfGridImage}]}
                                     >
                                         {renderGridImage !== null
                                             ? renderGridImage(data[index * 3], styles.img)
@@ -135,7 +135,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                         }
                                     </TouchableOpacity> : null}
                             </View>
-                            <View style={styles.unit_item}>
+                            <View style={[styles.unit_item, {height: heightOfGridImage}]}>
                                 {data.length > index * 3 + 1 ?
                                     <TouchableOpacity
                                         onPress={() => {
@@ -146,7 +146,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                             }, 1);
 
                                         }}
-                                        style={styles.unit_item}
+                                        style={[styles.unit_item, {height: heightOfGridImage}]}
                                     >
                                         {renderGridImage !== null
                                             ? renderGridImage(data[index * 3 + 1], styles.img)
@@ -159,7 +159,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                         }
                                     </TouchableOpacity> : null}
                             </View>
-                            <View style={styles.unit_item}>
+                            <View style={[styles.unit_item, {height: heightOfGridImage}]}>
                                 {data.length > index * 3 + 2 ?
                                     <TouchableOpacity
                                         onPress={() => {
@@ -170,7 +170,7 @@ const GridImageView = ({ data, headers = null, renderGridImage = null, renderMod
                                             }, 1);
 
                                         }}
-                                        style={styles.unit_item}
+                                        style={[styles.unit_item, {height: heightOfGridImage}]}
                                     >
                                         {renderGridImage !== null
                                             ? renderGridImage(data[index * 3 + 2], styles.img)
@@ -209,7 +209,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     unit_item: {
-        height: Dimensions.get('window').height / 5.5,
         margin: 1.5,
         flex: 1,
     },

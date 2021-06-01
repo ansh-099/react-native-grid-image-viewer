@@ -1,6 +1,6 @@
 {
   "name": "gridimageviewer",
-  "version": "1.0.10",
+  "version": "1.2.1",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
