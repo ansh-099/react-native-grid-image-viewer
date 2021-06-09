@@ -49,7 +49,8 @@ export default class App extends Component {
        <View style={styles.background}>
       <Text style={styles.headline_text}>Grid View Images</Text>
       <Text style={styles.explore_text}>Click on an image to view in full screen mode</Text>
-
+      
+      {/* Basic Usage */}
       <GridImageView data={[ 'url1', 'url2', 'url3', 'url4' ]} />
     </View>
     );
@@ -92,6 +93,7 @@ const App = () => {
       <Text style={styles.headline_text}>Grid View Images</Text>
       <Text style={styles.explore_text}>Click on an image to view in full screen mode</Text>
 
+      {/* Basic Usage */}
        <GridImageView data={[ 'url1', 'url2', 'url3', 'url4' ]} />
     </View>
   );
