@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useCallback, useState, useRef, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -25,6 +25,17 @@ const GridImageView = ({
   const [modal, setModal] = useState({visible: false, data: 0});
   const ref = useRef();
   var key = 0;
+
+  // Updates modal.data when user scrolls
+  const onViewableItemsChanged = useCallback(
+    ({changed}) => {
+      const viewableItem = changed.find((item) => item.isViewable);
+      if (viewableItem && typeof viewableItem.index === 'number') {
+        setModal({visible: true, data: viewableItem.index});
+      }
+    },
+    [setModal],
+  );
 
   const {StatusBarManager} = NativeModules;
   const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
@@ -53,6 +64,7 @@ const GridImageView = ({
           offset: Dimensions.get('window').width * index,
           index,
         })}
+        onViewableItemsChanged={onViewableItemsChanged}
         renderItem={({item, index}) => (
           <View key={index}>
             {renderModalImage !== null ? (
