@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useCallback, useState, useRef, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,7 +7,6 @@ import {
   Modal,
   FlatList,
   Image,
-  ScrollView,
   Platform,
   NativeModules,
 } from 'react-native';
@@ -27,6 +26,17 @@ const GridImageView = ({
   const ref = useRef();
   var key = 0;
 
+  // Updates modal.data when user scrolls
+  const onViewableItemsChanged = useCallback(
+    ({changed}) => {
+      const viewableItem = changed.find((item) => item.isViewable);
+      if (viewableItem && typeof viewableItem.index === 'number') {
+        setModal({visible: true, data: viewableItem.index});
+      }
+    },
+    [setModal],
+  );
+
   const {StatusBarManager} = NativeModules;
   const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
   const [height, setHeight] = useState(STATUSBAR_HEIGHT);
@@ -41,15 +51,22 @@ const GridImageView = ({
 
   const Component = ({style = {flex: 1}}) => {
     return (
-      <ScrollView
+      <FlatList
         showsHorizontalScrollIndicator={false}
         ref={ref}
         style={{...style}}
         snapToInterval={Dimensions.get('window').width}
         decelerationRate="fast"
-        horizontal>
-        {data.map((item, key) => (
-          <View key={key}>
+        horizontal
+        data={data}
+        getItemLayout={(_, index) => ({
+          length: Dimensions.get('window').width,
+          offset: Dimensions.get('window').width * index,
+          index,
+        })}
+        onViewableItemsChanged={onViewableItemsChanged}
+        renderItem={({item, index}) => (
+          <View key={index}>
             {renderModalImage !== null ? (
               renderModalImage(item, {
                 ...styles.img_modal,
@@ -70,8 +87,8 @@ const GridImageView = ({
               />
             )}
           </View>
-        ))}
-      </ScrollView>
+        )}
+      />
     );
   };
 
@@ -92,9 +109,8 @@ const GridImageView = ({
             onPress={() => {
               if (modal.data - 1 >= 0) {
                 setTimeout(() => {
-                  ref.current.scrollTo({
-                    x: Dimensions.get('window').width * (modal.data - 1),
-                    y: 0,
+                  ref.current.scrollToIndex({
+                    index: modal.data - 1,
                     animated: false,
                   });
                 }, 1);
@@ -119,9 +135,8 @@ const GridImageView = ({
             onPress={() => {
               if (modal.data + 1 < data.length) {
                 setTimeout(() => {
-                  ref.current.scrollTo({
-                    x: Dimensions.get('window').width * (modal.data + 1),
-                    y: 0,
+                  ref.current.scrollToIndex({
+                    index: modal.data + 1,
                     animated: false,
                   });
                 }, 1);
@@ -149,9 +164,8 @@ const GridImageView = ({
                       setModal({visible: true, data: index * 3});
 
                       setTimeout(() => {
-                        ref.current.scrollTo({
-                          x: Dimensions.get('window').width * index * 3,
-                          y: 0,
+                        ref.current.scrollToIndex({
+                          index: index * 3,
                           animated: false,
                         });
                       }, 1);
@@ -182,9 +196,8 @@ const GridImageView = ({
                       setModal({visible: true, data: index * 3 + 1});
 
                       setTimeout(() => {
-                        ref.current.scrollTo({
-                          x: Dimensions.get('window').width * (index * 3 + 1),
-                          y: 0,
+                        ref.current.scrollToIndex({
+                          index: index * 3 + 1,
                           animated: false,
                         });
                       }, 1);
@@ -215,9 +228,8 @@ const GridImageView = ({
                       setModal({visible: true, data: index * 3 + 2});
 
                       setTimeout(() => {
-                        ref.current.scrollTo({
-                          x: Dimensions.get('window').width * (index * 3 + 2),
-                          y: 0,
+                        ref.current.scrollToIndex({
+                          index: index * 3 + 2,
                           animated: false,
                         });
                       }, 1);
