@@ -48,6 +48,11 @@ const GridImageView = ({
         decelerationRate="fast"
         horizontal
         data={data}
+        getItemLayout={(_, index) => ({
+          length: Dimensions.get('window').width,
+          offset: Dimensions.get('window').width * index,
+          index,
+        })}
         renderItem={({item, index}) => (
           <View key={index}>
             {renderModalImage !== null ? (
