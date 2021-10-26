@@ -7,7 +7,6 @@ import {
   Modal,
   FlatList,
   Image,
-  ScrollView,
   Platform,
   NativeModules,
 } from 'react-native';
@@ -41,15 +40,16 @@ const GridImageView = ({
 
   const Component = ({style = {flex: 1}}) => {
     return (
-      <ScrollView
+      <FlatList
         showsHorizontalScrollIndicator={false}
         ref={ref}
         style={{...style}}
         snapToInterval={Dimensions.get('window').width}
         decelerationRate="fast"
-        horizontal>
-        {data.map((item, key) => (
-          <View key={key}>
+        horizontal
+        data={data}
+        renderItem={({item, index}) => (
+          <View key={index}>
             {renderModalImage !== null ? (
               renderModalImage(item, {
                 ...styles.img_modal,
@@ -70,8 +70,8 @@ const GridImageView = ({
               />
             )}
           </View>
-        ))}
-      </ScrollView>
+        )}
+      />
     );
   };
 
@@ -92,9 +92,8 @@ const GridImageView = ({
             onPress={() => {
               if (modal.data - 1 >= 0) {
                 setTimeout(() => {
-                  ref.current.scrollTo({
-                    x: Dimensions.get('window').width * (modal.data - 1),
-                    y: 0,
+                  ref.current.scrollToIndex({
+                    index: modal.data - 1,
                     animated: false,
                   });
                 }, 1);
@@ -119,9 +118,8 @@ const GridImageView = ({
             onPress={() => {
               if (modal.data + 1 < data.length) {
                 setTimeout(() => {
-                  ref.current.scrollTo({
-                    x: Dimensions.get('window').width * (modal.data + 1),
-                    y: 0,
+                  ref.current.scrollToIndex({
+                    index: modal.data + 1,
                     animated: false,
                   });
                 }, 1);
@@ -149,9 +147,8 @@ const GridImageView = ({
                       setModal({visible: true, data: index * 3});
 
                       setTimeout(() => {
-                        ref.current.scrollTo({
-                          x: Dimensions.get('window').width * index * 3,
-                          y: 0,
+                        ref.current.scrollToIndex({
+                          index: index * 3,
                           animated: false,
                         });
                       }, 1);
@@ -182,9 +179,8 @@ const GridImageView = ({
                       setModal({visible: true, data: index * 3 + 1});
 
                       setTimeout(() => {
-                        ref.current.scrollTo({
-                          x: Dimensions.get('window').width * (index * 3 + 1),
-                          y: 0,
+                        ref.current.scrollToIndex({
+                          index: index * 3 + 1,
                           animated: false,
                         });
                       }, 1);
@@ -215,9 +211,8 @@ const GridImageView = ({
                       setModal({visible: true, data: index * 3 + 2});
 
                       setTimeout(() => {
-                        ref.current.scrollTo({
-                          x: Dimensions.get('window').width * (index * 3 + 2),
-                          y: 0,
+                        ref.current.scrollToIndex({
+                          index: index * 3 + 2,
                           animated: false,
                         });
                       }, 1);
