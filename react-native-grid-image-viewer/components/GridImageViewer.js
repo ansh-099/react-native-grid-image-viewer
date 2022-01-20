@@ -10,10 +10,9 @@ import {
   ScrollView,
   Platform,
   NativeModules,
+  BackHandler,
 } from 'react-native';
 import Cross from './Cross';
-import MoveLeft from './MoveLeft';
-import MoveRight from './MoveRight';
 
 const GridImageView = ({
   data,
@@ -28,8 +27,13 @@ const GridImageView = ({
   var key = 0;
 
   const {StatusBarManager} = NativeModules;
-  const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT;
+  const STATUSBAR_HEIGHT =
+    Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT - 20;
   const [height, setHeight] = useState(STATUSBAR_HEIGHT);
+
+  const onCloseModal = () => {
+    setModal({visible: false, data: 0});
+  };
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -37,6 +41,10 @@ const GridImageView = ({
         setHeight(statusBarHeight.height);
       });
     }
+    BackHandler.addEventListener('hardwareBackPress', onCloseModal);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', onCloseModal);
+    };
   }, []);
 
   const Component = ({style = {flex: 1}}) => {
@@ -47,6 +55,7 @@ const GridImageView = ({
         style={{...style}}
         snapToInterval={Dimensions.get('window').width}
         decelerationRate="fast"
+        pagingEnabled
         horizontal>
         {data.map((item, key) => (
           <View key={key}>
@@ -82,28 +91,8 @@ const GridImageView = ({
         animationType="slide"
         transparent={true}
         visible={modal.visible}
-        onRequestClose={() => {
-          setModal({visible: false, data: 0});
-        }}>
+        onRequestClose={onCloseModal}>
         <Component />
-
-        <View style={styles.move_left_view}>
-          <TouchableOpacity
-            onPress={() => {
-              if (modal.data - 1 >= 0) {
-                setTimeout(() => {
-                  ref.current.scrollTo({
-                    x: Dimensions.get('window').width * (modal.data - 1),
-                    y: 0,
-                    animated: false,
-                  });
-                }, 1);
-                setModal({visible: true, data: modal.data - 1});
-              }
-            }}>
-            <MoveLeft />
-          </TouchableOpacity>
-        </View>
 
         <View style={{...styles.cross, top: height + 5}}>
           <TouchableOpacity
@@ -111,24 +100,6 @@ const GridImageView = ({
               setModal({visible: false, data: 0});
             }}>
             <Cross />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.move_right_view}>
-          <TouchableOpacity
-            onPress={() => {
-              if (modal.data + 1 < data.length) {
-                setTimeout(() => {
-                  ref.current.scrollTo({
-                    x: Dimensions.get('window').width * (modal.data + 1),
-                    y: 0,
-                    animated: false,
-                  });
-                }, 1);
-                setModal({visible: true, data: modal.data + 1});
-              }
-            }}>
-            <MoveRight />
           </TouchableOpacity>
         </View>
       </Modal>
@@ -282,24 +253,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     left: 0,
-  },
-  move_left_view: {
-    position: 'absolute',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: 0,
-    bottom: 0,
-    left: 10,
-  },
-  move_right_view: {
-    position: 'absolute',
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: 0,
-    bottom: 0,
-    right: 10,
   },
 });
 
